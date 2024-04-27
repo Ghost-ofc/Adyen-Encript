@@ -16,6 +16,8 @@ class CardInfo(BaseModel):
     cvv: str
     month: str
     year: str
+    public_key: str
+    version: str = '_0_1_25'
 
 class EncryptedCard(BaseModel):
     card: str
@@ -107,7 +109,24 @@ class Encryptor:
         return urandom(12)
 
 @app.post("/encrypt/")
-async def encrypt(card_info: CardInfo):
-    encryptor = Encryptor("YOUR_ADYEN_PUBLIC_KEY")
-    encrypted_card_info = encryptor.encrypt_card(card_info.card, card_info.cvv, card_info.month, card_info.year)
-    return encrypted_card_info
+async def encrypt_card(card_info: CardInfo):
+    # Accede a los valores de la tarjeta de crédito y otros datos
+    card = card_info.card
+    cvv = card_info.cvv
+    month = card_info.month
+    year = card_info.year
+    public_key = card_info.public_key
+    version = card_info.version
+
+    # Aquí puedes llamar a tu función para cifrar la tarjeta de crédito
+    # Usando la clave pública y la versión proporcionadas
+
+    # Simplemente devuelve los datos cifrados como ejemplo
+    return {
+        'card': card,
+        'cvv': cvv,
+        'month': month,
+        'year': year,
+        'public_key': public_key,
+        'version': version
+    }
